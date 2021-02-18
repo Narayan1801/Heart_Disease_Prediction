@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href=" https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script type="text/javascript" src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+  <title>HEART DISEASE PREDICTOR</title>
+</head>
+<br>
+<style>
+  html, body {
+      min-height: 100%;
+
+      }
+      body, div, form, input, select, textarea, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1 {
+      position: absolute;
+      margin: 0;
+      font-size: 32px;
+      color: #fff;
+      z-index: 2;
+      }
+      .testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 220px;
+      padding: 20px;
+      }
+      form {
+      width: 100%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 20px 0 black; 
+      }
+      .banner {
+      position: relative;
+      height: 200px;
+      background-image: url("heart.jpg");      
+      background-size: 650px 220px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      }
+      .banner::after {
+      content: "";
+      background-color: rgba(0, 0, 0, 0.5); 
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      }
+
+      input, textarea, select {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
+      input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      }
+      select {
+      width: 100%;
+      padding: 7px 0;
+      background: transparent;
+      }
+      textarea {
+      width: calc(100% - 12px);
+      padding: 5px;
+      }
+      .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder {
+      color: #a82877;
+      }
+      .item input:hover, .item select:hover, .item textarea:hover {
+      border: 1px solid transparent;
+      box-shadow: 0 0 6px 0 #a82877;
+      color: #a82877;
+      }
+      .item {
+      position: relative;
+      margin: 10px 0;
+      }
+      input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+      }
+      .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      font-size: 20px;
+      color: #a9a9a9;
+      }
+      .item i {
+      right: 1%;
+      top: 30px;
+      z-index: 1;
+      }
+      [type="date"]::-webkit-calendar-picker-indicator {
+      right: 0;
+      z-index: 2;
+      opacity: 0;
+      cursor: pointer;
+      }
+      input[type="time"]::-webkit-inner-spin-button {
+      margin: 2px 22px 0 0;
+      }
+      input[type=radio], input.other {
+      display: none;
+      }
+      label.radio {
+      position: relative;
+      display: inline-block;
+      margin: 5px 20px 10px 0;
+      cursor: pointer;
+      }
+      .question span {
+      margin-left: 30px;
+      }
+      label.radio:before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 0;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      }
+      #radio_5:checked ~ input.other {
+      display: block;
+      }
+      input[type=radio]:checked + label.radio:before {
+      border: 2px solid #a82877;
+      background: #a82877;
+      }
+      label.radio:after {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: 5px;
+      width: 7px;
+      height: 4px;
+      border: 3px solid #fff;
+      border-top: none;
+      border-right: none;
+      transform: rotate(-45deg);
+      opacity: 0;
+      }
+      input[type=radio]:checked + label:after {
+      opacity: 1;
+      }
+      .btn-block {
+      margin-top: 10px;
+      text-align: center;
+      }
+      button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px; 
+      background: #a82877;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background: #bf1e81;
+      }
+      @media (min-width: 568px) {
+      .name-item, .city-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .name-item input, .city-item input {
+      width: calc(50% - 20px);
+      }
+      .city-item select {
+      width: calc(50% - 8px);
+      }
+      }
+
+</style>
+<body>
+  <div class="testbox">
+      <form action="{{ url_for('predict')}}" method="post">
+        <div class="banner">
+          <h1>Smart Heart Disease Predictor</h1>
+        </div>
+    </div>
+    <br>  
+    
+    <h6 align="center"><b>   {{ prediction_text }} </b> </h6>
+     
+    <br> 
+    <div class="item">
+          <p>Age</p>
+          <input type="number" name="age" />
+          <i class="fa fa-male"></i>
+        </div>
+
+        <div class="item">
+          <p>Sex</p>
+          <input type="number" name="sex" placeholder="(1 = Male; 0 = Female)"/>
+        </div>
+
+        
+
+          <div class="item">
+          <p>0: Typical angina: chest pain related decrease blood supply to the heart
+          <br>1: Atypical angina: chest pain not related to heart
+          <br>2: Non-anginal pain: typically esophageal spasms (non heart related)
+          <br>3: Asymptomatic: chest pain not showing signs of disease</p>
+          <input type="number" name="cp" placeholder="Chest Pain type" />
+        </div>
+
+        <div class="item">
+          <p>trestbps</p>
+            <input type="number" name="trestbps" placeholder="Resting Blood Pressure in (mm/Hg)">
+
+        </div>
+        <div class="item">
+          <p>Cholestrol</p>
+            <input type="number" name="chol" placeholder="Serum Cholestoral in (mg/dl)">
+        </div>
+        <div class="item">
+          <p>FBS - (Fasting Blood Sugar) </p>
+          <input type="number" name="fbs" placeholder="(1 = True; 0 = False)">
+        </div>
+        <div class="item">
+          <p>restecg - Resting Electrocardiographic Results
+            <br>0: Nothing to note
+            <br>1: ST-T Wave abnormality
+            
+            can range from mild symptoms to severe problems
+            signals non-normal heart beat
+            <br>2: Possible or definite left ventricular hypertrophy
+            Enlarged heart's main pumping chamber
+          </p>
+          <input type="number" name="restecg" placeholder="restecg" />
+        </div>
+
+        <div class="item">
+          <p>thalach - Maximum Heart Rate achieved</p>
+          <input type="number" name="name" placeholder="Maximum heart rate achieved" />
+
+          
+        </div>
+        <div class="item">
+          <p>Exercise Induced Angina</p>
+          <input type="number" name="exang" placeholder="(1 = Yes; 0 = No)" />
+        </div>
+        
+        <div class="item">
+          <p>Oldpeak - ST depression induced by exercise relative to rest</p>
+          <input type="number" name="oldpeak" placeholder="INTEGERS ONLY"/>
+        </div>
+
+        <div class="item">
+          <p>Slope - the slope of the peak exercise ST segment
+          <br>0: Upsloping: better heart rate with excercise (uncommon)
+            <br>1: Flatsloping: minimal change (typical healthy heart)
+            <br>2: Downslopins: signs of unhealthy heart</p>
+          <input type="number" name="slope"/>
+        </div>
+
+        <div class="item">
+          <p>Number of major vessels (0-3) colored by flourosopy</p>
+          <input type="number" name="ca" />
+        </div>
+
+        <div class="item">
+          <p>Thalium Stress Result</p>
+          <input type="number" name="thal"/>
+        </div>
+        
+        <div class="btn-block">
+          <button type="submit">Predict</button>
+        </div>
+        
+  
+      
+
+
+</body>
+</html>
