@@ -1,1 +1,1 @@
-web: gunicorn -b :$PORT app:app(module:appinstance)
+web: gunicorn gettingstarted.wsgi
