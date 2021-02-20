@@ -1,10 +1,6 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
-import os
-
-port = int(os.environ.get('PORT', 8000))
-app.run(host='0.0.0.0', port=port, debug=True)
 
 app = Flask(__name__)
 model = pickle.load(open('heart_model.pkl','rb'))
