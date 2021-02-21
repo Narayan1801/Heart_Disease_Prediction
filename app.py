@@ -9,7 +9,7 @@ model = pickle.load(open('heart_model.pkl','rb'))
 def home():
     return render_template('main.html')
 
-@app.route('/predict',methods=['POST'])
+@app.route('/predict',methods=['GET'])
 def predict():
    
     int_features = [int(x) for x in request.form.values()]
